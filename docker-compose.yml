@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  fleetpulse-db:
+    image: postgres:15-alpine
+    container_name: fleetpulse-db
+    environment:
+      POSTGRES_DB: fleetpulse
+      POSTGRES_USER: fleetpulse
+      POSTGRES_PASSWORD: fleetpulse_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fleetpulse"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  fleetpulse-api:
+    build: .
+    container_name: fleetpulse-api
+    depends_on:
+      fleetpulse-db:
+        condition: service_healthy
+    environment:
+      - DATABASE_URL=jdbc:postgresql://fleetpulse-db:5432/fleetpulse
+      - DATABASE_USERNAME=fleetpulse
+      - DATABASE_PASSWORD=fleetpulse_password
+    ports:
+      - "8080:8080"
+    restart: on-failure
+
+volumes:
+  postgres-data:
