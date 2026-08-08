@@ -12,7 +12,7 @@ public class PressureRule implements HealthRule {
 
     private static final double MIN_NORMAL_PRESSURE = 90.0;
     private static final double MAX_NORMAL_PRESSURE = 130.0;
-    
+
     private static final double MIN_CRITICAL_PRESSURE = 70.0;
     private static final double MAX_CRITICAL_PRESSURE = 150.0;
 
