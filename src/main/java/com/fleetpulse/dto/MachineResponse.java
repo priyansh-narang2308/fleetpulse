@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MachineResponse {
-    
+
     private Long id;
     private String machineCode;
     private String name;
